@@ -5,37 +5,19 @@
   "description": "Lanceur Minecraft Beyond the curse",
   "author": "Daniel Scalzi (https://github.com/dscalzi/)",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/Beyond-the-Curse",
+  "homepage": "https://github.com/dscalzi/HeliosLauncher",
   "bugs": {
     "url": "https://github.com/Beyond-the-Curse/LancheurBeyondTheCurse/issues"
   },
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:main && npm run build:renderer",
-    "build:main": "webpack --config webpack.main.prod.js",
-    "build:renderer": "webpack --config webpack.renderer.prod.js",
-    
-    "dist": "npm run build && electron-builder",
-    "dist:dir": "npm run build && electron-builder --dir",
-    "dist:win": "npm run build && electron-builder --win",
-    "dist:mac": "npm run build && electron-builder --mac",
-    "dist:linux": "npm run build && electron-builder --linux",
-    
-    "dist:all": "npm run build && electron-builder --win --mac --linux",
-    
-    "pack": "npm run build && electron-builder --dir",
-    "pack:win": "npm run build && electron-builder --win --dir",
-    "pack:mac": "npm run build && electron-builder --mac --dir",
-    "pack:linux": "npm run build && electron-builder --linux --dir",
-    
-    "release": "npm run build && electron-builder --publish=always",
-    "release:draft": "npm run build && electron-builder --publish=draft",
-    
     "start": "electron .",
-    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:main\"",
-    "dev:main": "webpack --config webpack.main.dev.js && electron .",
-    "dev:renderer": "webpack serve --config webpack.renderer.dev.js"
+    "dist": "electron-builder build",
+    "dist:win": "npm run dist -- -w",
+    "dist:mac": "npm run dist -- -m",
+    "dist:linux": "npm run dist -- -l",
+    "lint": "eslint --config .eslintrc.json ."
   },
   "engines": {
     "node": "20.x.x"
@@ -60,11 +42,7 @@
   "devDependencies": {
     "electron": "^33.2.1",
     "electron-builder": "^25.1.8",
-    "eslint": "^8.57.1",
-    "webpack": "^5.90.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "concurrently": "^8.2.2"
+    "eslint": "^8.57.1"
   },
   "repository": {
     "type": "git",

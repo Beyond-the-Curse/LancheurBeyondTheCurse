@@ -1,52 +1,51 @@
-# Microsoft Authentication
+# Authentification Microsoft
 
-Authenticating with Microsoft is fully supported by Helios Launcher.
+L'authentification avec Microsoft est entièrement prise en charge par Helios Launcher.
 
-## Acquiring an Entra Client ID
+## Acquisition d'un identifiant client Entra
 
-1. Navigate to https://portal.azure.com
-2. In the search bar, search for **Microsoft Entra ID**.
-3. In Microsoft Entra ID, go to **App Registrations** on the left pane (Under *Manage*).
-4. Click **New Registration**.
-    - Set **Name** to be your launcher's name.
-    - Set **Supported account types** to *Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)*
-    - Leave **Redirect URI** blank.
-    - Register the application.
-5. You should be on the application's management page. If not, Navigate back to **App Registrations**. Select the application you just registered.
-6. Click **Authentication** on the left pane (Under *Manage*).
-7. Click **Add Platform**.
-    - Select **Mobile and desktop applications**.
-    - Choose `https://login.microsoftonline.com/common/oauth2/nativeclient` as the **Redirect URI**.
-    - Select **Configure** to finish adding the platform.
-8. Go to **Certificates & secrets**.
-    - Select **Client secrets**.
-    - Click **New client secret**.
-    - Set a description.
-    - Click **Add**.
-    - Don't copy the client secret, adding one is just a requirement from Microsoft.
-8. Navigate back to **Overview**.
-9. Copy **Application (client) ID**.
+1. Accédez à https://portal.azure.com
+2. Dans la barre de recherche, recherchez **ID Microsoft Entra**.
+3. Dans Microsoft Entra ID, accédez à **Enregistrements d'applications** dans le volet de gauche (sous *Gérer*).
+4. Cliquez sur **Nouvelle inscription**.
+- Définissez **Nom** comme nom de votre lanceur.
+- Définissez **Types de comptes pris en charge** sur *Comptes dans n'importe quel annuaire d'organisation (n'importe quel locataire Microsoft Entra ID - Multilocataire) et comptes Microsoft personnels (par exemple, Skype, Xbox)*.
+- Laissez **URI de redirection** vide.
+- Enregistrez l'application.
+5. Vous devriez être sur la page de gestion de l'application. Sinon, revenez à **Enregistrements d'applications**. Sélectionnez l'application que vous venez d'enregistrer.
+6. Cliquez sur **Authentification** dans le volet de gauche (sous *Gérer*).
+7. Cliquez sur **Ajouter une plateforme**.
+- Sélectionnez **Applications mobiles et de bureau**.
+- Choisissez `https://login.microsoftonline.com/common/oauth2/nativeclient` comme **URI de redirection**.
+- Sélectionnez **Configurer** pour terminer l'ajout de la plateforme.
+8. Accédez à **Certificats et secrets**.
+- Sélectionnez **Secrets clients**.
+- Cliquez sur **Nouveau secret client**.
+- Définissez une description.
+- Cliquez sur **Ajouter**.
+- Ne copiez pas le secret client ; son ajout est une exigence de Microsoft.
+8. Revenez à **Aperçu**.
+9. Copiez l'**ID d'application (client)**.
 
+## Ajout de l'ID client Entra à Helios Launcher.
 
-## Adding the Entra Client ID to Helios Launcher.
+Dans app/assets/js/ipcconstants.js, vous trouverez **AZURE_CLIENT_ID**. Définissez-le avec l'identifiant de votre application.
 
-In `app/assets/js/ipcconstants.js` you'll find **`AZURE_CLIENT_ID`**. Set it to your application's id.
+Remarque : L'identifiant client Entra n'est PAS une valeur secrète et **peut** être stocké dans Git. Référence : https://stackoverflow.com/questions/57306964/are-azure-active-directorys-tenantid-and-clientid-considered-secrets
 
-Note: Entra Client ID is NOT a secret value and **can** be stored in git. Reference: https://stackoverflow.com/questions/57306964/are-azure-active-directorys-tenantid-and-clientid-considered-secrets
+Relancez ensuite votre application et connectez-vous. Un message d'erreur s'affichera, car l'application n'est pas encore sur liste blanche. Microsoft a besoin d'une certaine activité sur l'application avant de l'ajouter à la liste blanche. __Il est obligatoire de se connecter avant de demander l'ajout à la liste blanche.__
 
-Then relaunch your app, and login. You'll be greeted with an error message, because the app isn't whitelisted yet. Microsoft needs some activity on the app before whitelisting it. __Trying to log in before requesting whitelist is mandatory.__
+## Demande d'ajout à la liste blanche auprès de Microsoft
 
-## Requesting whitelisting from Microsoft
-
-1. Ensure you have completed every step of this doc page.
-2. Fill [this form](https://aka.ms/mce-reviewappid) with the required information. Remember this is a new appID for approval. You can find both the Client ID and the Tenant ID on the overview page in the Azure Portal.
-3. Give Microsoft some time to review your app.
-4. Once you have received Microsoft's approval, allow up to 24 hours for the changes to apply.
+1. Assurez-vous d'avoir suivi toutes les étapes de cette page de documentation.
+2. Remplissez [ce formulaire](https://aka.ms/mce-reviewappid) avec les informations requises. N'oubliez pas qu'il s'agit d'un nouvel ID d'application à approuver. Vous trouverez l'ID client et l'ID locataire sur la page d'aperçu du portail Azure.
+3. Laissez à Microsoft le temps d'examiner votre application.
+4. Une fois l'approbation de Microsoft obtenue, prévoyez jusqu'à 24 heures pour que les modifications soient appliquées.
 
 ----
 
-You can now authenticate with Microsoft through the launcher.
+Vous pouvez désormais vous authentifier auprès de Microsoft via le lanceur.
 
-References:
+Références :
 - https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
 - https://help.minecraft.net/hc/en-us/articles/16254801392141

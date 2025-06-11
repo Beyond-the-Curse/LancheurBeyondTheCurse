@@ -1,6 +1,6 @@
 {
   "name": "beyond-the-curse",
-  "version": "2.2.1",
+  "version": "1.0.0",
   "productName": "Beyond The Curse",
   "description": "Lanceur Minecraft Beyond the curse",
   "author": "Daniel Scalzi (https://github.com/dscalzi/)",
@@ -46,6 +46,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dscalzi/HeliosLauncher.git"
+    "url": "git+https://github.com/Beyond-the-Curse/LancheurBeyondTheCurse.git"
   }
 }

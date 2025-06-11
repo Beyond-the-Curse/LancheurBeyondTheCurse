@@ -1,6 +1,6 @@
-appId: 'helioslauncher'
-productName: 'Helios Launcher'
-artifactName: '${productName}-setup-${version}.${ext}'
+appId: 'beyond-the-curse.launcher'
+productName: 'BeyondTheCurse Launcher'
+artifactName: '${productName}-${version}-${os}-${arch}.${ext}'
 
 copyright: 'Copyright © 2018-2024 Daniel Scalzi'
 
@@ -9,15 +9,25 @@ compression: 'maximum'
 
 files:
   - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
+  - '!{.github,*.md,*.txt}'
+  - '!{coverage,test,tests,spec,specs}'
 
 extraResources:
   - 'libraries'
+
+# Publication GitHub
+publish:
+  - provider: 'github'
+    owner: 'YOUR_GITHUB_USERNAME'
+    repo: 'YOUR_REPO_NAME'
 
 # Windows Configuration
 win: 
   target: 
     - target: 'nsis'
       arch: 'x64'
+  icon: 'build/icon.ico'
+  requestedExecutionLevel: 'asInvoker'
 
 # Windows Installer Configuration
 nsis:
@@ -25,27 +35,60 @@ nsis:
   perMachine: false
   allowElevation: true
   allowToChangeInstallationDirectory: true
+  installerIcon: 'build/icon.ico'
+  uninstallerIcon: 'build/icon.ico'
+  installerHeaderIcon: 'build/icon.ico'
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: '${productName}'
 
 # macOS Configuration
 mac:
   target:
     - target: 'dmg'
-      arch:
-        - 'x64'
-        - 'arm64'
-  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
+      arch: ['x64', 'arm64']
+  artifactName: '${productName}-${version}-${arch}.${ext}'
   category: 'public.app-category.games'
+  icon: 'build/icon.icns'
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: 'build/entitlements.mac.plist'
+  entitlementsInherit: 'build/entitlements.mac.plist'
+
+# macOS DMG Configuration
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+  artifactName: '${productName}-${version}-${arch}.${ext}'
 
 # Linux Configuration
 linux: 
-  target: 'AppImage'
+  target: 
+    - target: 'AppImage'
+      arch: 'x64'
   maintainer: 'Daniel Scalzi'
   vendor: 'Daniel Scalzi'
   synopsis: 'Modded Minecraft Launcher'
   description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.'
   category: 'Game'
+  icon: 'build/icon.png'
+  artifactName: '${productName}-${version}-${arch}.${ext}'
 
+# Mise à jour automatique
+autoUpdater:
+  provider: 'github'
+  owner: 'YOUR_GITHUB_USERNAME'
+  repo: 'YOUR_REPO_NAME'
 
 directories:
   buildResources: 'build'
   output: 'dist'
+
+# Configuration pour les builds CI/CD
+beforeBuild: 'scripts/beforeBuild.js'
+afterSign: 'scripts/notarize.js'
